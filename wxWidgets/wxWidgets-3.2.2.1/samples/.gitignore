@@ -1,0 +1,6 @@
+.vs/
+*.vcxproj.user
+vc_x64_mswu/
+vc_x64_mswud/
+vc_mswud/
+vc_mswu/
