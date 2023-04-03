@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="glfw_opengl2">
+      <UniqueIdentifier>{8b046c35-a634-49ba-8b9e-3295ea37a8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glfw_opengl3">
+      <UniqueIdentifier>{ba88c7ba-0c79-4a46-9f17-f26c270279a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32_directx9">
+      <UniqueIdentifier>{00c3b3de-348d-44fd-9626-9ae8ea9fb752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32_directx10">
+      <UniqueIdentifier>{3927dacb-ec2c-4cac-9e96-bd45649fa2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32_directx11">
+      <UniqueIdentifier>{ca620042-90d9-466c-b720-ec503a8129c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32_directx12">
+      <UniqueIdentifier>{f3601e8a-5919-4eb2-a6ca-19d74f899fb7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\backends\imgui_impl_opengl2.cpp">
+      <Filter>glfw_opengl2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\backends\imgui_impl_opengl3.cpp">
+      <Filter>glfw_opengl3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\backends\imgui_impl_glut.cpp" />
+    <ClCompile Include="..\backends\imgui_impl_dx9.cpp">
+      <Filter>win32_directx9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\backends\imgui_impl_dx10.cpp">
+      <Filter>win32_directx10</Filter>
+    </ClCompile>
+    <ClCompile Include="..\backends\imgui_impl_dx11.cpp">
+      <Filter>win32_directx11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\backends\imgui_impl_dx12.cpp">
+      <Filter>win32_directx12</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
