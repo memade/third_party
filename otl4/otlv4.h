@@ -1,6 +1,6 @@
 // =================================================================================
-// ORACLE, ODBC and DB2/CLI Template Library, Version 4.0.455
-// Copyright (C) 1996-2020, Sergei Kuchin (skuchin@gmail.com)
+// ORACLE, ODBC and DB2/CLI Template Library, Version 4.0.476,
+// Copyright (C) 1996-2023, Sergei Kuchin (skuchin@gmail.com)
 //
 // This library is free software. Permission to use, copy, modify,
 // and/or distribute this software for any purpose with or without fee
@@ -25,7 +25,7 @@
 #include "otl_include_0.h"
 #endif
 
-#define OTL_VERSION_NUMBER (0x0401C7L)
+#define OTL_VERSION_NUMBER (0x0401DCL)
 
 #if defined(OTL_THIRD_PARTY_STRING_VIEW_CLASS)
 #define OTL_STD_STRING_VIEW_CLASS OTL_THIRD_PARTY_STRING_VIEW_CLASS
@@ -50,10 +50,6 @@
 #define OTL_CPP_17_ON
 #endif
 
-#if defined(_MSC_VER) && (_MSC_VER==1600)
-#define OTL_CPP_11_ON
-#endif
-
 #if defined(_MSC_VER) && (_MSC_VER==1700)
 #define OTL_CPP_11_ON
 #endif
@@ -70,10 +66,12 @@
 #endif
 
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__<=407) && (__GNUC__*100+__GNUC_MINOR__>=404)
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #endif
 
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>=701)
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #endif
 
@@ -356,14 +354,14 @@
 #define OTL_SPRINTF_S sprintf_s
 #else
 #ifndef OTL_STRCAT_S
-#define OTL_STRCAT_S(dest, dest_sz, src)  ((void)(dest_sz),strcat(dest, src))
+#define OTL_STRCAT_S(dest, dest_sz, src) (strncat(dest, src, static_cast<std::size_t>(dest_sz-1)))
 #endif // OTL_STRCAT_S
 #ifndef OTL_STRCPY_S
-#define OTL_STRCPY_S(dest, dest_sz, src) ((void)(dest_sz),strcpy(dest, src))
+#define OTL_STRCPY_S(dest, dest_sz, src) (strncpy(dest, src, static_cast<std::size_t>(dest_sz-1)),dest[static_cast<std::size_t>(dest_sz-1)]=0)
 #endif // OTL_STRCPY_S
 #ifndef OTL_STRNCPY_S
 #define OTL_STRNCPY_S(dest, dest_sz, src, count)                               \
-  ((void)(dest_sz),strncpy(dest, src, count))
+  ((void)(dest_sz),strncpy(dest, src, count),dest[static_cast<std::size_t>(count)]=0)
 #endif // OTL_STRNCPY_S
 
 #ifndef OTL_SPRINTF_S
@@ -373,16 +371,18 @@
 
 #if defined(__GNUC__)
 #define OTL_SPRINTF_S_ATTRIBUTE __attribute__ ((format (printf, 3, 4)))
+#elif defined(__clang__)
+#define OTL_SPRINTF_S_ATTRIBUTE __attribute__ ((__format__ (__printf__, 3, 4)))
 #else
 #define OTL_SPRINTF_S_ATTRIBUTE
 #endif
 
-int otl_sprintf_s(char* dest, size_t /* dest_sz */, const char* fmt, ...) OTL_SPRINTF_S_ATTRIBUTE;
+int otl_sprintf_s(char* dest, size_t dest_sz, const char* fmt, ...) OTL_SPRINTF_S_ATTRIBUTE;
 
-inline int otl_sprintf_s(char* dest, size_t /* dest_sz */, const char* fmt, ...){
+inline int otl_sprintf_s(char* dest, size_t dest_sz, const char* fmt, ...){
   va_list vl;
   va_start(vl, fmt);
-  int res = vsprintf(dest, fmt, vl);
+  int res = vsnprintf(dest, dest_sz, fmt, vl);
   va_end(vl);
   return res;
 }
@@ -1047,14 +1047,14 @@ OTL_BIGINT_TO_STR and OTL_STR_TO_BIGINT are defined
   if (OTL_TRACE_LEVEL & level) {                                               \
     char temp_connect_str[2048];                                               \
     OTL_STRCPY_S(temp_connect_str, sizeof(temp_connect_str), userid);          \
-    OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), "/");             \
+    OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, "/");             \
     size_t sz = strlen(passwd);                                                \
     for (size_t i = 0; i < sz; ++i)                                            \
-      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), "*");           \
+      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, "*");           \
     size_t tns_sz = strlen(tnsname);                                           \
     if (tns_sz > 0) {                                                          \
-      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), "@");           \
-      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), tnsname);       \
+      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, "@");           \
+      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, tnsname);       \
     }                                                                          \
     OTL_TRACE_STREAM << OTL_TRACE_LINE_PREFIX;                                 \
     OTL_TRACE_STREAM << class_name << "(this=";                                \
@@ -1072,14 +1072,14 @@ OTL_BIGINT_TO_STR and OTL_STR_TO_BIGINT are defined
   {                                                                            \
     char temp_connect_str[2048];                                               \
     OTL_STRCPY_S(temp_connect_str, sizeof(temp_connect_str), userid);          \
-    OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), "/");             \
+    OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, "/");             \
     size_t sz = strlen(passwd);                                                \
     for (size_t i = 0; i < sz; ++i)                                            \
-      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), "*");           \
+      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, "*");           \
     size_t tns_sz = strlen(tnsname);                                           \
     if (tns_sz > 0) {                                                          \
-      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), "@");           \
-      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str), tnsname);       \
+      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, "@");           \
+      OTL_STRCAT_S(temp_connect_str, sizeof(temp_connect_str) - strlen(temp_connect_str) - 1, tnsname);       \
     }                                                                          \
     OTL_TRACE_STREAM << OTL_TRACE_LINE_PREFIX;                                 \
     OTL_TRACE_STREAM << class_name << "(this=";                                \
@@ -1100,14 +1100,14 @@ OTL_BIGINT_TO_STR and OTL_STR_TO_BIGINT are defined
    if (OTL_TRACE_LEVEL & level) {                                              \
     char temp_connect_str2[2048];                                              \
     OTL_STRCPY_S(temp_connect_str2, sizeof(temp_connect_str2), userid);        \
-    OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), "/");           \
+    OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, "/"); \
     size_t sz = strlen(passwd);                                                \
     for (size_t i = 0; i < sz; ++i)                                            \
-      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), "*");         \
+      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, "*");         \
     size_t tns_sz = strlen(tnsname);                                           \
     if (tns_sz > 0) {                                                          \
-      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), "@");         \
-      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), tnsname);     \
+      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, "@");         \
+      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, tnsname);     \
     }                                                                          \
     OTL_TRACE_STREAM << OTL_TRACE_LINE_PREFIX;                                 \
     OTL_TRACE_STREAM << class_name;                                            \
@@ -1128,14 +1128,14 @@ OTL_BIGINT_TO_STR and OTL_STR_TO_BIGINT are defined
   {                                                                            \
     char temp_connect_str2[2048];                                              \
     OTL_STRCPY_S(temp_connect_str2, sizeof(temp_connect_str2), userid);        \
-    OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), "/");           \
+    OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, "/");           \
     size_t sz = strlen(passwd);                                                \
     for (size_t i = 0; i < sz; ++i)                                            \
-      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), "*");         \
+      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, "*");         \
     size_t tns_sz = strlen(tnsname);                                           \
     if (tns_sz > 0) {                                                          \
-      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), "@");         \
-      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2), tnsname);     \
+      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, "@");         \
+      OTL_STRCAT_S(temp_connect_str2, sizeof(temp_connect_str2) - strlen(temp_connect_str2) - 1, tnsname);     \
     }                                                                          \
     OTL_TRACE_STREAM << OTL_TRACE_LINE_PREFIX;                                 \
     OTL_TRACE_STREAM << class_name;                                            \
@@ -3053,6 +3053,7 @@ public:
     this_is_last_piece_ = s.this_is_last_piece_;
     length = s.length;
     extern_buffer_flag = s.extern_buffer_flag;
+    buf_size=s.buf_size;
     v = s.v;
     s.v = nullptr;
     s.length = 0;
@@ -3404,7 +3405,6 @@ inline void otl_strcpy(unsigned char *trg, unsigned char *src, int &overflow,
   }
 }
 
-#if defined(OTL_UNICODE) || (defined(_MSC_VER) && (_MSC_VER >= 1400))
 inline void otl_strcpy(unsigned char *trg, const unsigned char *src) {
   OTL_CHAR *c1 = OTL_RCAST(OTL_CHAR *, trg);
   const OTL_CHAR *c2 = OTL_RCAST(const OTL_CHAR *, src);
@@ -3413,11 +3413,6 @@ inline void otl_strcpy(unsigned char *trg, const unsigned char *src) {
   }
   *c1 = 0;
 }
-#else
-inline void otl_strcpy(unsigned char *trg, const unsigned char *src) {
-  strcpy(OTL_RCAST(char *, trg), OTL_RCAST(const char *, src));
-}
-#endif
 
 inline void otl_strcat(char *trg, const char *src) {
   while (*trg)
@@ -5134,11 +5129,26 @@ public:
       OTL_STRNCPY_S(OTL_RCAST(char *, stm_text), sizeof(stm_text), sqlstm,
                     sizeof(stm_text) - 1);
 #else
+#if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>800)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
+#endif
       strncpy(OTL_RCAST(char *, stm_text), sqlstm, sizeof(stm_text));
+#if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>800)
+#pragma GCC diagnostic pop
+#endif
+
       stm_text[sizeof(stm_text) - 1] = 0;
 #endif
 #else
+#if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>800)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
+#endif
       strncpy(OTL_RCAST(char *, stm_text), sqlstm, sizeof(stm_text));
+#if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>800)
+#pragma GCC diagnostic pop
+#endif
       stm_text[sizeof(stm_text) - 1] = 0;
 #endif
     }
@@ -8823,12 +8833,12 @@ public:
       return;
     }
 
-#if defined(OTL_STL) && defined(OTL_INTERNAL_UNCAUGHT_EXCEPTION_ON)
+#if defined(OTL_STL) && defined(OTL_INTERNAL_UNCAUGHT_EXCEPTION_ON) && !defined(OTL_DESTRUCTORS_DO_NOT_THROW)
     if (otl_uncaught_exception()) {
       clean();
       return;
     }
-#elif defined(OTL_INTERNAL_UNCAUGHT_EXCEPTION_ON)
+#elif defined(OTL_INTERNAL_UNCAUGHT_EXCEPTION_ON) && !defined(OTL_DESTRUCTORS_DO_NOT_THROW)
     if (otl_uncaught_exception()) {
       clean();
       return;
@@ -10130,8 +10140,10 @@ public:
                      otl_tmpl_ext_hv_decl<TVariableStruct, TTimestampStruct,
                                           TExceptionStruct, TConnectStruct,
                                           TCursorStruct>::out) {
-            ++iv_len;
-            in_vl[iv_len - 1] = v;
+            if (in_vl != nullptr){
+              ++iv_len;
+              in_vl[iv_len - 1] = v;
+            }
             v->set_param_type(otl_output_param);
           } else if (hvd.get_inout(j) ==
                      otl_tmpl_ext_hv_decl<TVariableStruct, TTimestampStruct,
@@ -11672,6 +11684,7 @@ public:
   };
 
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__==408)
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 
@@ -11737,6 +11750,7 @@ public:
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>=705)
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
       SQLPOINTER temp = OTL_SCAST(SQLPOINTER,SQL_AUTOCOMMIT_OFF);
@@ -11803,6 +11817,7 @@ inline void otl_special_convert_char_to_SQLWCHAR
 #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && (__GNUC__*100+__GNUC_MINOR__>=407)
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif
   OTL_NODISCARD int rlogon(const char*username, const char *passwd,
@@ -13932,10 +13947,30 @@ public:
                                      OTL_RCAST(unsigned char *, stm_text));
         status = SQLExecDirect(cda, temp_stm_text, SQL_NTS);
         delete[] temp_stm_text;
+#if defined(OTL_ODBC_LEGACY_RPC)
+        _rpc = 0;
+        if (!do_not_call_sql_row_count) {
+          OTL_SQLLEN tmp_rpc = 0;
+          SQLRETURN diag_status = sql_row_count(&tmp_rpc);
+          if (diag_status == SQL_SUCCESS ||
+              diag_status == SQL_SUCCESS_WITH_INFO)
+            _rpc = OTL_SCAST(long, tmp_rpc);
+        }
+#endif
       }
 #else
       status =
           SQLExecDirect(cda, OTL_RCAST(OTL_SQLCHAR_PTR, stm_text), SQL_NTS);
+#if defined(OTL_ODBC_LEGACY_RPC)
+        _rpc = 0;
+        if (!do_not_call_sql_row_count) {
+          OTL_SQLLEN tmp_rpc = 0;
+          SQLRETURN diag_status = sql_row_count(&tmp_rpc);
+          if (diag_status == SQL_SUCCESS ||
+              diag_status == SQL_SUCCESS_WITH_INFO)
+            _rpc = OTL_SCAST(long, tmp_rpc);
+        }
+#endif
 #endif
 
 #if defined(OTL_THROWS_ON_SQL_SUCCESS_WITH_INFO)
@@ -13964,6 +13999,7 @@ public:
           )
         return 0;
       else {
+#if !defined(OTL_ODBC_LEGACY_RPC)
         _rpc = 0;
         if (!do_not_call_sql_row_count) {
           OTL_SQLLEN tmp_rpc = 0;
@@ -13972,6 +14008,7 @@ public:
               diag_status == SQL_SUCCESS_WITH_INFO)
             _rpc = OTL_SCAST(long, tmp_rpc);
         }
+#endif
         return 1;
       }
     }
@@ -15343,7 +15380,7 @@ OTL_THROWS_OTL_EXCEPTION:
       sc.init(sc.get_max_size());
 #endif
 #if defined(OTL_FREETDS_ODBC_WORKAROUNDS)
-    if (!auto_commit_)
+    if (!auto_commit_ && connected)
       rollback();
 #endif
 #if defined(OTL_ROLLS_BACK_BEFORE_LOGOFF)
@@ -16622,9 +16659,9 @@ OTL_THROWS_OTL_EXCEPTION:
 
 #if (defined(OTL_STL) || defined(OTL_UNICODE_STRING_TYPE)) &&                  \
     defined(OTL_STREAM_POOLING_ON)
-    if (*adb == nullptr)
+    if (adb != nullptr && *adb == nullptr)
       *adb = &db;
-    if ((*adb) && (**adb).get_stream_pool_enabled_flag()) {
+    if (adb != nullptr && (*adb) && (**adb).get_stream_pool_enabled_flag()) {
       char temp_buf[128];
       otl_itoa(arr_size, temp_buf);
 
@@ -16703,7 +16740,7 @@ OTL_THROWS_OTL_EXCEPTION:
         connected = 1;
         return;
       }
-      shell->orig_sql_stm = sql_stm;
+      if(shell != nullptr) shell->orig_sql_stm = sql_stm;
     }
 #endif
 
@@ -16730,8 +16767,7 @@ OTL_THROWS_OTL_EXCEPTION:
       *c = OTL_SCAST(char, otl_to_upper(*c));
       ++c;
     }
-    if (adb == nullptr)
-      adb = &(shell->adb);
+    adb = &(shell->adb);
     (*adb) = &db;
     try {
 #if (defined(OTL_ODBC_POSTGRESQL) && !defined(OTL_ODBC_ALTERNATE_RPC) ||       \
@@ -17226,7 +17262,7 @@ OTL_THROWS_OTL_EXCEPTION:
       tmp.fraction = otl_to_fraction(OTL_SCAST(unsigned int, s.fraction),
                                      s.frac_precision);
       (*this) << tmp;
-      OTL_TRACE_READ(OTL_TRACE_FORMAT_DATETIME(s), "operator >>",
+      OTL_TRACE_READ(OTL_TRACE_FORMAT_DATETIME(s), "operator <<",
                      "otl_datetime&");
       inc_next_iov();
       return *this;
@@ -19351,7 +19387,13 @@ public:
 
   OTL_NODISCARD OCIEnv *get_envhp() { return envhp; }
 
-  OTL_NODISCARD OCIError *get_errhp() { return errhp; }
+  OTL_NODISCARD OCIError* get_errhp() { return errhp; }
+
+  void set_svchp(OCISvcCtx* x) {  svchp = x; }
+
+  void set_srvhp(OCIServer* x) {  srvhp = x; }
+
+  void set_authp(OCISession* x) { authp = x; }
 
   OTL_NODISCARD OCISvcCtx *get_svchp() { return svchp; }
 
@@ -19603,11 +19645,17 @@ public:
     return 1;
   }
 
+
+
   OTL_NODISCARD int session_begin(const char *userid, const char *password,
                                   const int aauto_commit,
-                                  const int session_mode = OCI_DEFAULT) {
+                                  const int session_mode = OCI_DEFAULT,
+                                  OCISession* authp2 = nullptr) {
     int &status = last_status;
     int cred_type;
+    OCISession* authp1 = authp;
+    if (authp2)
+        authp1 = authp2;
 
     if (!attached)
       return 0;
@@ -19618,14 +19666,14 @@ public:
     } else {
       ext_cred = 0;
       cred_type = OCI_CRED_RDBMS;
-      status = OCIAttrSet(OTL_RCAST(dvoid *, authp),
+      status = OCIAttrSet(OTL_RCAST(dvoid *, authp1),
                           OTL_SCAST(ub4, OCI_HTYPE_SESSION),
                           OTL_RCAST(dvoid *, OTL_CCAST(char *, userid)),
                           OTL_SCAST(ub4, strlen(OTL_CCAST(char *, userid))),
                           OTL_SCAST(ub4, OCI_ATTR_USERNAME), errhp);
       if (status)
         return 0;
-      status = OCIAttrSet(OTL_RCAST(dvoid *, authp),
+      status = OCIAttrSet(OTL_RCAST(dvoid *, authp1),
                           OTL_SCAST(ub4, OCI_HTYPE_SESSION),
                           OTL_RCAST(dvoid *, OTL_CCAST(char *, password)),
                           OTL_SCAST(ub4, strlen(OTL_CCAST(char *, password))),
@@ -19635,13 +19683,13 @@ public:
     }
     session_mode_ = session_mode;
     status =
-        OCISessionBegin(svchp, errhp, authp, OTL_SCAST(unsigned, cred_type),
+        OCISessionBegin(svchp, errhp, authp1, OTL_SCAST(unsigned, cred_type),
                         OTL_SCAST(ub4, session_mode_));
     if (status != OCI_SUCCESS && status != OCI_SUCCESS_WITH_INFO)
       return 0;
     status = OCIAttrSet(
         OTL_RCAST(dvoid *, svchp), OTL_SCAST(ub4, OCI_HTYPE_SVCCTX),
-        OTL_RCAST(dvoid *, authp), 0, OTL_SCAST(ub4, OCI_ATTR_SESSION), errhp);
+        OTL_RCAST(dvoid *, authp1), 0, OTL_SCAST(ub4, OCI_ATTR_SESSION), errhp);
     if (status)return 0;
 #if defined(OTL_ORA_SDO_GEOMETRY)
     OCIParam *paramp = nullptr;
@@ -19911,9 +19959,11 @@ public:
   void error(otl_exc &exception_struct) {
     sb4 errcode;
     size_t len;
-    OCIErrorGet(OTL_RCAST(dvoid *, errhp), OTL_SCAST(ub4, 1), nullptr, &errcode,
+    OCIErrorGet(errhp ? OTL_RCAST(dvoid *, errhp) : OTL_RCAST(dvoid*, envhp), 
+                OTL_SCAST(ub4, 1), nullptr, &errcode,
                 OTL_RCAST(text *, exception_struct.msg),
-                OTL_SCAST(ub4, sizeof(exception_struct.msg)), OCI_HTYPE_ERROR);
+                OTL_SCAST(ub4, sizeof(exception_struct.msg)), 
+                (errhp ? OCI_HTYPE_ERROR : OCI_HTYPE_ENV));
     exception_struct.code = errcode;
     len = strlen(OTL_RCAST(char *, exception_struct.msg));
     exception_struct.msg[len] = 0;
@@ -20321,8 +20371,10 @@ public:
   }
 
 #if defined(__clang__) && (__clang_major__*100+__clang_minor__ >= 1000)
+#if !defined(__has_warning) || __has_warning("-Wmisleading-indentation")
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmisleading-indentation"
+#endif
 #endif
 
   OTL_NODISCARD int actual_elem_size(void) { return act_elem_size; }
@@ -20740,7 +20792,7 @@ public:
       offset = 1;
     int rc;
     int is_init = 0;
-    rc = OCILobLocatorIsInit(connect->get_envhp(), connect->get_errhp(), lob[0],
+    rc = OCILobLocatorIsInit(connect->get_envhp(), connect->get_errhp(), lob[andx],
                              &is_init);
     if (rc != OCI_SUCCESS)
       return 0;
@@ -23086,23 +23138,23 @@ public:
       char err_msg[1024];
       char temp_num[64];
       OTL_STRCPY_S(err_msg, sizeof(err_msg), otl_error_msg_7);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), ", trying to store ");
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, ", trying to store ");
       otl_itoa(s.len(), temp_num);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), temp_num);
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, temp_num);
 #if defined(OTL_UNICODE)
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), " Unicode characters at offset ");
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, " Unicode characters at offset ");
 #else
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), " bytes at offset ");
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, " bytes at offset ");
 #endif
       otl_itoa(offset, temp_num);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), temp_num);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), ". New length: ");
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, temp_num);
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, ". New length: ");
       otl_itoa((offset - 1) + s.len(), temp_num);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), temp_num);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg),
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, temp_num);
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1,
                    " would be bigger than length of lob: ");
       otl_itoa(lob_len, temp_num);
-      OTL_STRCAT_S(err_msg, sizeof(err_msg), temp_num);
+      OTL_STRCAT_S(err_msg, sizeof(err_msg)-strlen(err_msg)-1, temp_num);
       OTL_THROW((otl_tmpl_exception<TExceptionStruct, TConnectStruct, TCursorStruct>(
                    err_msg, otl_error_code_7,
                    cursor->get_stm_label() ? cursor->get_stm_label()
@@ -23641,18 +23693,19 @@ OTL_THROWS_OTL_EXCEPTION:
 
   void session_begin(
       const char *username, const char *password, const int auto_commit = 0,
-      const int session_mode = OCI_DEFAULT
+      const int session_mode = OCI_DEFAULT,      
       // OCI_SYSDBA -- in this mode, the user is authenticated for SYSDBA
       // access.
       // OCI_SYSOPER -- in this mode, the user is authenticated
       // for SYSOPER access.
+      OCISession* authp1 = nullptr
       ) OTL_THROWS_OTL_EXCEPTION {
     if (cmd_) {
       delete[] cmd_;
       cmd_ = nullptr;
     }
     retcode = connect_struct.session_begin(username, password, auto_commit,
-                                           session_mode);
+                                           session_mode, authp1);
     if (retcode)
       connected = 1;
     else {
@@ -25661,8 +25714,8 @@ public:
     if (!sel_cur.get_connected())
       return;
     OTL_STRCPY_S(tmp_buf, sizeof(tmp_buf), "begin close ");
-    OTL_STRCAT_S(tmp_buf, sizeof(tmp_buf), cur_placeholder);
-    OTL_STRCAT_S(tmp_buf, sizeof(tmp_buf), "; end;");
+    OTL_STRCAT_S(tmp_buf, sizeof(tmp_buf)-strlen(tmp_buf)-1, cur_placeholder);
+    OTL_STRCAT_S(tmp_buf, sizeof(tmp_buf)-strlen(tmp_buf)-1, "; end;");
     otl_tmpl_cursor<otl_exc, otl_conn, otl_cur, otl_var>::parse(tmp_buf);
     rc = OCIBindByName(cursor_struct.cda, &bindpp, cursor_struct.errhp,
                        OTL_RCAST(text *, cur_placeholder),
@@ -27052,14 +27105,17 @@ protected:
     case otl_var_char:
       if (type_code == otl_var_char)
         return 1;
+      break;
     case otl_var_raw:
       if (type_code == otl_var_raw)
         return 1;
+      break;
     case otl_var_timestamp:
     case otl_var_tz_timestamp:
     case otl_var_ltz_timestamp:
       if (type_code == otl_var_timestamp)
         return 1;
+      break;
     default:
 #if defined(OTL_CHECK_IN_TYPE_FUNC)
       if ((vl[cur_in]->get_ftype() == type_code &&
@@ -27071,6 +27127,7 @@ protected:
       if (vl[cur_in]->get_ftype() == type_code &&
           vl[cur_in]->get_elem_size() == tsize)
         return 1;
+      break;
 #endif
     }
     return check_in_type_throw(type_code);
@@ -28022,11 +28079,22 @@ public:
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#elif defined(_MSC_VER )
+#pragma warning( push )
 #endif
           OTL_SPRINTF_S(temp_buf2, sizeof(temp_buf2),
                         desc.get_ptr()[0].get_ptr()->bind_var, temp_buf);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER )
+#pragma warning( pop )
 #endif
           otl_strcat(sql_stm, "BEGIN ");
           otl_strcat(sql_stm, full_name);
@@ -28072,11 +28140,22 @@ public:
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#elif defined(_MSC_VER )
+#pragma warning( push )
 #endif
           OTL_SPRINTF_S(temp_buf2, sizeof(temp_buf2),
                         desc.get_ptr()[0].get_ptr()->bind_var, temp_buf);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER )
+#pragma warning( pop )
 #endif
           otl_strcat(sql_stm, "BEGIN ");
           otl_strcat(sql_stm, temp_buf2);
@@ -28186,11 +28265,22 @@ public:
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#elif defined(_MSC_VER )
+#pragma warning( push )
 #endif
             OTL_SPRINTF_S(temp_buf2, sizeof(temp_buf2),
                           desc.get_ptr()[i].get_ptr()->bind_var, temp_buf);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER )
+#pragma warning( pop )
 #endif
           otl_strcat(sql_stm, temp_buf2);
         }
@@ -28245,11 +28335,22 @@ public:
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#elif defined(_MSC_VER )
+#pragma warning( push )
 #endif
             OTL_SPRINTF_S(temp_buf2, sizeof(temp_buf2),
                           desc.get_ptr()[i].get_ptr()->bind_var, temp_buf);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER )
+#pragma warning( pop )
 #endif
           otl_strcat(sql_stm, temp_buf2);
         }
@@ -28292,11 +28393,22 @@ public:
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#elif defined(_MSC_VER )
+#pragma warning( push )
 #endif
         OTL_SPRINTF_S(temp_buf2, sizeof(temp_buf2),
                       desc.get_ptr()[i].get_ptr()->bind_var, temp_buf);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER )
+#pragma warning( pop )
 #endif
         otl_strcat(sql_stm, temp_buf2);
       }
@@ -28327,11 +28439,22 @@ public:
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-value"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#elif defined(_MSC_VER )
+#pragma warning( push )
 #endif
         OTL_SPRINTF_S(temp_buf2, sizeof(temp_buf2),
                       desc.get_ptr()[i].get_ptr()->bind_var, temp_buf);
 #if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER )
+#pragma warning( pop )
 #endif
         otl_strcat(sql_stm, temp_buf2);
       }
@@ -28807,9 +28930,9 @@ OTL_THROWS_OTL_EXCEPTION:
     OTL_TRACE_STREAM_OPEN2
 #if (defined(OTL_STL) || defined(OTL_UNICODE_STRING_TYPE)) &&                  \
     defined(OTL_STREAM_POOLING_ON)
-    if (*adb == nullptr)
+    if (adb != nullptr && *adb == nullptr)
       *adb = &db;
-    if ((*adb) && (**adb).get_stream_pool_enabled_flag()) {
+    if (adb != nullptr && (*adb) && (**adb).get_stream_pool_enabled_flag()) {
       char temp_buf[128];
       otl_itoa(arr_size, temp_buf);
       const char delimiter = ';';
@@ -28885,7 +29008,7 @@ OTL_THROWS_OTL_EXCEPTION:
         connected = 1;
         return;
       }
-      shell->orig_sql_stm = sql_stm;
+      if(shell != nullptr) shell->orig_sql_stm = sql_stm;
     }
 #endif
 
@@ -28911,8 +29034,7 @@ OTL_THROWS_OTL_EXCEPTION:
       *c = OTL_SCAST(char, otl_to_upper(*c));
       ++c;
     }
-    if (adb == nullptr)
-      adb = &(shell->adb);
+    adb = &(shell->adb);
     (*adb) = &db;
     try {
       if ((strncmp(tmp, "SELECT", 6) == 0 || strncmp(tmp, "WITH", 4) == 0) &&
@@ -31103,7 +31225,7 @@ public:
       OTL_THROW((otl_exception(otl_error_msg_32, otl_error_code_32)));
     char sql_stmt[1024];
     OTL_STRCPY_S(sql_stmt, sizeof(sql_stmt), "select :i<int> from ");
-    OTL_STRCAT_S(sql_stmt, sizeof(sql_stmt), table_name);
+    OTL_STRCAT_S(sql_stmt, sizeof(sql_stmt)-strlen(sql_stmt)-1, table_name);
     int arg = 0;
     otl_stream s(1, sql_stmt, *db);
     if (!s.get_shell() || !s.get_shell()->ss)

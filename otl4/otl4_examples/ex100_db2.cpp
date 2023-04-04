@@ -22,6 +22,11 @@
 #define OTL_STREAM_WITH_STD_OPTIONAL_ON
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER>=1929) && (defined(OTL_CPP_20_ON))
+// VC++ 2022 or higher when /std=c++20 is used
+#define OTL_STREAM_WITH_STD_OPTIONAL_ON
+#endif
+
 #include <otlv4.h> // include the OTL 4 header file
 
 #if (defined(__clang__) || defined(__GNUC__)) && defined(OTL_CPP_14_ON) \
@@ -32,6 +37,12 @@
 
 #if defined(_MSC_VER) && (_MSC_VER>=1910) && defined(OTL_CPP_17_ON)
 // VC++ 2017 or higher when /std=c++latest is used
+#include <optional>
+#endif
+
+
+#if defined(_MSC_VER) && (_MSC_VER>=1929) && (defined(OTL_CPP_20_ON))
+// VC++ 2022 or higher when /std=c++20 is used
 #include <optional>
 #endif
 

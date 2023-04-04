@@ -71,11 +71,11 @@ int main()
   db1.rlogon("UID=scott;PWD=tiger;DSN=mssql2008"); // connect to ODBC
 
   db2.rlogon("UID=scott;PWD=tiger;DSN=mssql2008"); // connect to ODBC
-  db3.rlogon("UID=scott;PWD=tiger;DSN=mssql2008"); // connect to ODBC
+  db3.rlogon("UID=scott;PWD=tiger;DSN=mssql2008",1); // connect to ODBC
 
   db2.set_transaction_isolation_level(otl_tran_read_uncommitted);
   db3.set_transaction_isolation_level(otl_tran_read_committed);
-
+  
   otl_cursor::direct_exec
    (
     db1,
