@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\github\ninja\build\CMakeFiles\_CMakeLTOTest-CXX\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\github\ninja\build\CMakeFiles\_CMakeLTOTest-CXX\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{A3A3A6A9-4641-30D4-B7EF-4C1F22809AC0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

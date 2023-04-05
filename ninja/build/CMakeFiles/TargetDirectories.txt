@@ -1,0 +1,6 @@
+D:/github/ninja/build/CMakeFiles/libninja-re2c.dir
+D:/github/ninja/build/CMakeFiles/libninja.dir
+D:/github/ninja/build/CMakeFiles/ninja.dir
+D:/github/ninja/build/CMakeFiles/INSTALL.dir
+D:/github/ninja/build/CMakeFiles/ALL_BUILD.dir
+D:/github/ninja/build/CMakeFiles/ZERO_CHECK.dir

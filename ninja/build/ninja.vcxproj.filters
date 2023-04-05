@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\github\ninja\src\ninja.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\github\ninja\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\build_log.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\build.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\clean.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\clparser.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\dyndep.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\dyndep_parser.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\debug_flags.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\deps_log.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\disk_interface.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\edit_distance.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\eval_env.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\graph.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\graphviz.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\json.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\line_printer.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\manifest_parser.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\metrics.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\missing_deps.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\parser.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\state.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\status.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\string_piece_util.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\util.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\version.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\subprocess-win32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\includes_normalize-win32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\msvc_helper-win32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\msvc_helper_main-win32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\getopt.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja.dir\$(Configuration)\minidump-win32.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja-re2c.dir\$(Configuration)\depfile_parser.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="D:\github\ninja\build\libninja-re2c.dir\$(Configuration)\lexer.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{DD3AA7D5-8309-3618-84BE-AEAD2196A7D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{DAE95F5D-BAAD-35E4-A400-86E304019BB5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A8662A67-B6B8-33C4-9014-9799ED4F82CF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>libninja</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libninja.dir\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libninja.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libninja</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libninja.dir\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libninja.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libninja</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4100;4267;4706;4702;4244</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4100;4267;4706;4702;4244</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\github\ninja\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/github/ninja/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+D:\tools\cmake-3.25.1-windows-x86_64\bin\cmake.exe -SD:/github/ninja -BD:/github/ninja/build --check-stamp-file D:/github/ninja/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\github\ninja\build\CMakeFiles\3.25.1\CMakeCXXCompiler.cmake;D:\github\ninja\build\CMakeFiles\3.25.1\CMakeRCCompiler.cmake;D:\github\ninja\build\CMakeFiles\3.25.1\CMakeSystem.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeCXXInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeCommonLanguageInclude.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeGenericSystem.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeInitializeConfigs.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeLanguageInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeRCInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeSystemSpecificInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeSystemSpecificInitialize.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CTest.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CTestUseLaunchers.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported\foo.cpp;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported\main.cpp;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckSymbolExists.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Compiler\MSVC-CXX.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Compiler\MSVC.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\Windows-MSVC-CXX.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\Windows-MSVC.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\Windows.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\github\ninja\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/github/ninja/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+D:\tools\cmake-3.25.1-windows-x86_64\bin\cmake.exe -SD:/github/ninja -BD:/github/ninja/build --check-stamp-file D:/github/ninja/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\github\ninja\build\CMakeFiles\3.25.1\CMakeCXXCompiler.cmake;D:\github\ninja\build\CMakeFiles\3.25.1\CMakeRCCompiler.cmake;D:\github\ninja\build\CMakeFiles\3.25.1\CMakeSystem.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeCXXInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeCommonLanguageInclude.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeGenericSystem.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeInitializeConfigs.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeLanguageInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeRCInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeSystemSpecificInformation.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CMakeSystemSpecificInitialize.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CTest.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CTestUseLaunchers.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported\foo.cpp;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckIPOSupported\main.cpp;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\CheckSymbolExists.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Compiler\MSVC-CXX.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Compiler\MSVC.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\Windows-MSVC-CXX.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\Windows-MSVC.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\Windows.cmake;D:\tools\cmake-3.25.1-windows-x86_64\share\cmake-3.25\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\github\ninja\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\github\ninja\src\build_log.cc" />
+    <ClCompile Include="D:\github\ninja\src\build.cc" />
+    <ClCompile Include="D:\github\ninja\src\clean.cc" />
+    <ClCompile Include="D:\github\ninja\src\clparser.cc" />
+    <ClCompile Include="D:\github\ninja\src\dyndep.cc" />
+    <ClCompile Include="D:\github\ninja\src\dyndep_parser.cc" />
+    <ClCompile Include="D:\github\ninja\src\debug_flags.cc" />
+    <ClCompile Include="D:\github\ninja\src\deps_log.cc" />
+    <ClCompile Include="D:\github\ninja\src\disk_interface.cc" />
+    <ClCompile Include="D:\github\ninja\src\edit_distance.cc" />
+    <ClCompile Include="D:\github\ninja\src\eval_env.cc" />
+    <ClCompile Include="D:\github\ninja\src\graph.cc" />
+    <ClCompile Include="D:\github\ninja\src\graphviz.cc" />
+    <ClCompile Include="D:\github\ninja\src\json.cc" />
+    <ClCompile Include="D:\github\ninja\src\line_printer.cc" />
+    <ClCompile Include="D:\github\ninja\src\manifest_parser.cc" />
+    <ClCompile Include="D:\github\ninja\src\metrics.cc" />
+    <ClCompile Include="D:\github\ninja\src\missing_deps.cc" />
+    <ClCompile Include="D:\github\ninja\src\parser.cc" />
+    <ClCompile Include="D:\github\ninja\src\state.cc" />
+    <ClCompile Include="D:\github\ninja\src\status.cc" />
+    <ClCompile Include="D:\github\ninja\src\string_piece_util.cc" />
+    <ClCompile Include="D:\github\ninja\src\util.cc" />
+    <ClCompile Include="D:\github\ninja\src\version.cc" />
+    <ClCompile Include="D:\github\ninja\src\subprocess-win32.cc" />
+    <ClCompile Include="D:\github\ninja\src\includes_normalize-win32.cc" />
+    <ClCompile Include="D:\github\ninja\src\msvc_helper-win32.cc" />
+    <ClCompile Include="D:\github\ninja\src\msvc_helper_main-win32.cc" />
+    <ClCompile Include="D:\github\ninja\src\getopt.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="D:\github\ninja\src\minidump-win32.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\github\ninja\build\ZERO_CHECK.vcxproj">
+      <Project>{706C9FC4-D220-3D35-9F7D-3B9E31D82DEC}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
