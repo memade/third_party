@@ -1,0 +1,3 @@
+https://chrome-infra-packages.appspot.com/p/gn/gn/windows-amd64/+/latest
+
+https://github.com/ninja-build/ninja/releases
