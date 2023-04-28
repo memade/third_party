@@ -17,7 +17,7 @@
 #include   "Signal.hpp"
 #include   "TcpServer.hpp"
 #include   "TcpClient.hpp"
-#include   "LogWriter.hpp"
+//#include   "LogWriter.hpp"
 #include   "Packet.hpp"
 #include   "Udp.hpp"
 #include   "Idle.hpp"

@@ -40,10 +40,12 @@ EventLoop::~EventLoop()
 {
  if (loop_ != uv_default_loop())
  {
-  uv_loop_close(loop_);
+  //uv_loop_close(loop_);
+  uv_shutdown(loop_);
   delete async_;
   delete loop_;
  }
+ //uv_loop_close(default_loop_);
 }
 
 EventLoop* uv::EventLoop::DefaultLoop()
@@ -142,4 +144,39 @@ const char* EventLoop::GetErrorMessage(int status)
   return info;
  }
  return uv_strerror(status);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+static void close_walk_cb(uv_handle_t* handle, void* arg) {
+ if (!uv_is_closing(handle))
+  uv_close(handle, NULL);
+}
+static void close_loop(uv_loop_t* loop) {
+ uv_walk(loop, close_walk_cb, NULL);
+ uv_run(loop, UV_RUN_DEFAULT);
+}
+static int can_ipv6(void) {
+ uv_interface_address_t* addr = nullptr;
+ int supported = 0;
+ int count = 0;
+ int i = 0;
+ if (uv_interface_addresses(&addr, &count))
+  return 0;  /* Assume no IPv6 support on failure. */
+ supported = 0;
+ for (i = 0; supported == 0 && i < count; i += 1)
+  supported = (AF_INET6 == addr[i].address.address6.sin6_family);
+ uv_free_interface_addresses(addr, count);
+ return supported;
+}
+
+void EventLoop::uv_shutdown(uv_loop_t* loop_ /*= nullptr*/) {
+ do {
+  if (loop_) {
+   close_loop(loop_);
+   uv_loop_close(loop_);
+  }
+  close_loop(uv_default_loop());
+  uv_loop_close(uv_default_loop());
+  uv_library_shutdown();
+ } while (0);
 }

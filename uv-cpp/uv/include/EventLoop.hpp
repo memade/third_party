@@ -52,7 +52,7 @@ namespace uv
   uv_loop_t* handle();
 
   static const char* GetErrorMessage(int status);
-
+  static void uv_shutdown(uv_loop_t* loop_ = nullptr);
  private:
   EventLoop(Mode mode);
 
