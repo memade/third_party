@@ -243,7 +243,7 @@
 // Default is 1
 //
 // Recommended setting: 1 (can be set to 0 if you don't use the cmd line)
-#define wxUSE_CMDLINE_PARSER 1
+#define wxUSE_CMDLINE_PARSER 0
 
 // Support for multithreaded applications: if 1, compile in thread classes
 // (thread.h) and make the library a bit more thread safe. Although thread

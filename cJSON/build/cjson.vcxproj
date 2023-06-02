@@ -19,34 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\uv\Async.cpp" />
-    <ClCompile Include="..\uv\CycleBuffer.cpp" />
-    <ClCompile Include="..\uv\DnsGet.cpp" />
-    <ClCompile Include="..\uv\EventLoop.cpp" />
-    <ClCompile Include="..\uv\GlobalConfig.cpp" />
-    <ClCompile Include="..\uv\http\HttpClient.cpp" />
-    <ClCompile Include="..\uv\http\HttpCommon.cpp" />
-    <ClCompile Include="..\uv\http\HttpServer.cpp" />
-    <ClCompile Include="..\uv\http\Request.cpp" />
-    <ClCompile Include="..\uv\http\Response.cpp" />
-    <ClCompile Include="..\uv\Idle.cpp" />
-    <ClCompile Include="..\uv\ListBuffer.cpp" />
-    <ClCompile Include="..\uv\Packet.cpp" />
-    <ClCompile Include="..\uv\Signal.cpp" />
-    <ClCompile Include="..\uv\SocketAddr.cpp" />
-    <ClCompile Include="..\uv\TcpAcceptor.cpp" />
-    <ClCompile Include="..\uv\TcpClient.cpp" />
-    <ClCompile Include="..\uv\TcpConnection.cpp" />
-    <ClCompile Include="..\uv\TcpServer.cpp" />
-    <ClCompile Include="..\uv\Timer.cpp" />
-    <ClCompile Include="..\uv\Udp.cpp" />
+    <ClCompile Include="..\cJSON.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{D7782A2D-0176-4E67-832E-02D106CAD71D}</ProjectGuid>
+    <ProjectGuid>{748935D3-B36F-4255-ADC5-BCB0805524A4}</ProjectGuid>
     <RootNamespace>createlib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>uvcpp</ProjectName>
+    <ProjectName>cjson</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -121,7 +101,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\uv-cpp\;$(SolutionDir)..\third_party\uv-cpp\uv\include\;$(SolutionDir)..\third_party\libuv-1.44.2\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -145,7 +125,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\uv-cpp\;$(SolutionDir)..\third_party\uv-cpp\uv\include\;$(SolutionDir)..\third_party\libuv-1.44.2\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -167,7 +147,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\uv-cpp\;$(SolutionDir)..\third_party\uv-cpp\uv\include\;$(SolutionDir)..\third_party\libuv-1.44.2\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -185,7 +165,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\uv-cpp\;$(SolutionDir)..\third_party\uv-cpp\uv\include\;$(SolutionDir)..\third_party\libuv-1.44.2\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>

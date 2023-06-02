@@ -1256,24 +1256,43 @@ int wxCmdLineParser::Parse(bool showUsage)
         }
     }
 
-    // if there was an error during parsing the command line, show this error
-    // and also the usage message if it had been requested
-    if ( !ok && (!errorMsg.empty() || (helpRequested && showUsage)) )
+#if 1//!@ Martell disable error message. on 2023.5.30
+    if (!ok && (!errorMsg.empty() || (helpRequested && showUsage)))
     {
-        wxMessageOutput* msgOut = wxMessageOutput::Get();
-        if ( msgOut )
+        /*wxMessageOutput* msgOut = wxMessageOutput::Get();
+        if (msgOut)
         {
             wxString usage;
-            if ( showUsage )
+            if (showUsage)
                 usage = GetUsageString();
 
-            msgOut->Printf( wxT("%s%s"), usage.c_str(), errorMsg.c_str() );
+            msgOut->Printf(wxT("%s%s"), usage.c_str(), errorMsg.c_str());
         }
         else
         {
-            wxFAIL_MSG( wxT("no wxMessageOutput object?") );
+            wxFAIL_MSG(wxT("no wxMessageOutput object?"));
+        }*/
+    }
+#else
+    // if there was an error during parsing the command line, show this error
+    // and also the usage message if it had been requested
+    if (!ok && (!errorMsg.empty() || (helpRequested && showUsage)))
+    {
+        wxMessageOutput* msgOut = wxMessageOutput::Get();
+        if (msgOut)
+        {
+            wxString usage;
+            if (showUsage)
+                usage = GetUsageString();
+
+            msgOut->Printf(wxT("%s%s"), usage.c_str(), errorMsg.c_str());
+        }
+        else
+        {
+            wxFAIL_MSG(wxT("no wxMessageOutput object?"));
         }
     }
+#endif
 
     return ok ? 0 : helpRequested ? -1 : 1;
 }
