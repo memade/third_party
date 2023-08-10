@@ -51,6 +51,7 @@ namespace curlpp
 
   Easy();
 
+  virtual void Release() const { delete this; }
   /**
   * This allow to have a handle, which might have
   * some option set, but we don't care about them.

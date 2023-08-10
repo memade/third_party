@@ -57,7 +57,25 @@ curlpp::Multi::add(const curlpp::Easy* handle)
  }
  mHandles.insert(std::make_pair(handle->getHandle(), handle));
 }
+bool curlpp::Multi::empty() const {
+ return mHandles.empty();
+}
+void curlpp::Multi::clear(const std::function<void(const curlpp::Easy* success, const curlpp::Easy* failed)>& clear_cb) {
+ for (auto it = mHandles.begin(); it != mHandles.end();) {
+  CURLMcode code = curl_multi_remove_handle(mMultiHandle, it->second->getHandle());
+  if (code != CURLM_CALL_MULTI_PERFORM && code != CURLM_OK) {
+   if (clear_cb)
+    clear_cb(nullptr, it->second);
+  }
+  else {
+   it = mHandles.erase(it);
+   if (clear_cb)
+    clear_cb(it->second, nullptr);
+  }
 
+
+ }
+}
 void
 curlpp::Multi::remove(const curlpp::Easy* handle)
 {

@@ -43,6 +43,8 @@ namespace curlpp {
  public:
   Multi();
   ~Multi();
+  bool empty() const;
+  void clear(const std::function<void(const curlpp::Easy* success,const curlpp::Easy* failed)>& clear_cb = nullptr);
   void add(const curlpp::Easy* handle);
   void remove(const curlpp::Easy* handle);
   bool perform(int* nbHandles);

@@ -19,14 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cJSON.c" />
+    <ClCompile Include="..\src\curlpp\cURLpp.cpp" />
+    <ClCompile Include="..\src\curlpp\Easy.cpp" />
+    <ClCompile Include="..\src\curlpp\Exception.cpp" />
+    <ClCompile Include="..\src\curlpp\Form.cpp" />
+    <ClCompile Include="..\src\curlpp\Info.cpp" />
+    <ClCompile Include="..\src\curlpp\internal\CurlHandle.cpp" />
+    <ClCompile Include="..\src\curlpp\internal\OptionList.cpp" />
+    <ClCompile Include="..\src\curlpp\internal\OptionSetter.cpp" />
+    <ClCompile Include="..\src\curlpp\internal\SList.cpp" />
+    <ClCompile Include="..\src\curlpp\Multi.cpp" />
+    <ClCompile Include="..\src\curlpp\OptionBase.cpp" />
+    <ClCompile Include="..\src\curlpp\Options.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{748935D3-B36F-4255-ADC5-BCB0805524A4}</ProjectGuid>
+    <ProjectGuid>{CC853CF8-008B-4BBD-A627-F42FBBD72E83}</ProjectGuid>
     <RootNamespace>createlib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>cjson</ProjectName>
+    <ProjectName>curlpp-0.8.1</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -101,8 +112,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\curlpp-0.8.1\;$(SolutionDir)..\third_party\curlpp-0.8.1\include\;$(SolutionDir)..\third_party\curl-7.85.0\include\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;CURLPP_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -125,8 +136,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\curlpp-0.8.1\;$(SolutionDir)..\third_party\curlpp-0.8.1\include\;$(SolutionDir)..\third_party\curl-7.85.0\include\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;CURLPP_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -147,8 +158,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\curlpp-0.8.1\;$(SolutionDir)..\third_party\curlpp-0.8.1\include\;$(SolutionDir)..\third_party\curl-7.85.0\include\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;CURLPP_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -165,8 +176,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\cJSON\</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\third_party\;$(SolutionDir)..\third_party\curlpp-0.8.1\;$(SolutionDir)..\third_party\curlpp-0.8.1\include\;$(SolutionDir)..\third_party\curl-7.85.0\include\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;CURL_STATICLIB;CURLPP_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>

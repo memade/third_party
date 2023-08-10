@@ -17,7 +17,6 @@ namespace
   };
 }
 
-
 void curlpp::initialize(long flags)
 {
   CURLcode code;
